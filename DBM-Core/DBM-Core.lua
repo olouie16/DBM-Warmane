@@ -5837,15 +5837,15 @@ end
 
 function DBM:HasMapRestrictions()
 	local playerX, playerY = GetPlayerMapPosition("player")
-	-- if playerX == 0 or playerY == 0 then -- attempt to fix zone once. Disabled for now to confirm LK 2.5 FPS issues.
-	-- 	SetMapToCurrentZone() -- DO NOT RUN THIS FUNCTION IN A LOOP! It's a waste of cpu power and will tank FPS due to radar loop scan.
-	-- 	playerX, playerY = GetPlayerMapPosition("player")
-	-- end
+	if playerX == 0 or playerY == 0 then -- attempt to fix zone once. Disabled for now to confirm LK 2.5 FPS issues.
+		SetMapToCurrentZone() -- DO NOT RUN THIS FUNCTION IN A LOOP! It's a waste of cpu power and will tank FPS due to radar loop scan.
+		playerX, playerY = GetPlayerMapPosition("player")
+	end
 	local mapName = GetMapInfo()
 	local level = GetCurrentMapDungeonLevel()
 	local usesTerrainMap = DungeonUsesTerrainMap()
 	level = usesTerrainMap and level - 1 or level
-	if (playerX == 0 and playerY == 0) or (self.MapSizes[mapName] and not self.MapSizes[mapName][level]) then
+	if --[[(playerX == 0 and playerY == 0) or]] (self.MapSizes[mapName] and not self.MapSizes[mapName][level]) then
 		return true
 	end
 	return false
